@@ -10,6 +10,7 @@ declare type ReactMediaRecorderRenderProps = {
     status: StatusMessages;
     isAudioMuted: boolean;
     previewStream: MediaStream | null;
+    stopStream: () => void;
 };
 declare type ReactMediaRecorderProps = {
     render: (props: ReactMediaRecorderRenderProps) => ReactElement;
