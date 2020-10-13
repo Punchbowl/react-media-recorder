@@ -10,6 +10,7 @@ type ReactMediaRecorderRenderProps = {
   status: StatusMessages
   isAudioMuted: boolean
   previewStream: MediaStream | null
+  stopStream: () => void
 }
 
 type ReactMediaRecorderProps = {
@@ -186,6 +187,10 @@ export const ReactMediaRecorder = ({
     }
   }
 
+  const stopStream = () => {
+    mediaStream.current && mediaStream.current.getTracks().forEach((track) => track.stop())
+  }
+
   return render({
     error: RecorderErrors[error],
     muteAudio: () => muteAudio(true),
@@ -196,5 +201,6 @@ export const ReactMediaRecorder = ({
     status,
     isAudioMuted,
     previewStream: previewStream.current,
+    stopStream,
   })
 }
