@@ -87,7 +87,7 @@ export const ReactMediaRecorder = ({
   }, [audio, video, screen])
 
   useEffect(() => {
-    if (!window.MediaRecorder) {
+    if (!(window.MediaRecorder && window.MediaRecorder.isTypeSupported)) {
       throw new Error('Unsupported Browser')
     }
 
@@ -165,7 +165,7 @@ export const ReactMediaRecorder = ({
 
   const onRecordingStop = () => {
     const blobProperty: BlobPropertyBag =
-      blobPropertyBag || video ? { type: 'video/mp4' } : { type: 'audio/wav' }
+      blobPropertyBag || video ? { type: mediaRecorderOptions && mediaRecorderOptions.mimeType || 'video/mp4' } : { type: 'audio/wav' }
     const blob = new Blob(mediaChunks.current, blobProperty)
     const url = URL.createObjectURL(blob)
     setStatus('stopped')
